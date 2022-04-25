@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.hole{
+			background-color: none;
+			height: 120px;
+			width: 130px;
+			position: absolute;
+			margin-top: 65px;
+			background-image: url("gorshok.png");
+			background-size: 100% 100%;
+
+		}
+
+	
+
+		.mole{
+			height: 95px;
+			width: 60px;
+			position: absolute;
+			transition: 1.5s;
+
+		}
+
+		.btn{
+			height: 40px;
+			width: 100px;
+			border-radius: 40px;
+
+		}
+
+		.p{
+			margin-top: 10px; 
+			margin-left: 10px; 
+			font-size: 24px;
+			color: #6e2a08;
+			font-family: arial;
+		}
+	</style>
+</head>
+<body>
+	<button class="btn">Начать</button>
+	<p class="p">Очки: <span class="glasses">0</span></p>
+	<p class="p">Роза = 10</p>
+	<p class="p">Тюльпан = 20</p>
+	<p class="p">Колокольчик = 30</p>
+	<p class="p">Сухой цветок = -10</p>
+	<p class="p">Набери 200 баллов за 15 с.</p>
+	
+			<div class="hole first" style="left: 400px; top: 78px;"></div>
+			<div class="hole second" style="left: 700px; top: 78px;"></div>
+			<div class="hole third" style="left: 1000px; top: 78px;"></div>
+		
+			<div class="hole fourth" style="left: 400px; top: 288px;"></div>
+			<div class="hole fifth" style="left: 700px; top: 288px;"></div>
+			<div class="hole sixth" style="left: 1000px; top: 288px;"></div>
+		
+			<div class="hole seventh" style="left: 400px; top: 498px;"></div>
+			<div class="hole eighth" style="left: 700px; top: 498px;"></div>
+			<div class="hole nineth" style="left: 1000px; top: 498px;"></div>
+	
+
+<script type="text/javascript">
+	let hole = document.querySelectorAll(".hole");
+	let images = ["1.png", "2.png", "4.png", "3.png"];
+	let b = document.querySelector(".btn");
+	let x = [435, 735, 1035];
+	let y = [136, 346, 556];
+	let int1;
+	let score = 0;
+	
+
+	function getRandom(num){
+        let rand = Math.random() * num; 
+        let round = Math.round(rand); 
+        return round;
+    }
+
+    b.onclick = function(){
+    	 int1 = setInterval(create, 700);
+    	 setTimeout(finish, 15000);
+    }
+
+    function finish(){
+    	clearInterval(int1);
+
+    	if (score < 200) {
+    		alert();
+    	}
+    }
+
+    function create(){
+    	let randomHole = getRandom(8);
+    	let moles = document.createElement('div');
+	    hole[8].appendChild(moles);
+		moles.classList.add("mole");
+		hole[8].before(moles);
+		hole[7].before(moles);
+		hole[6].before(moles);
+		hole[5].before(moles);
+		hole[4].before(moles);
+		hole[3].before(moles);
+		hole[2].before(moles);
+		hole[1].before(moles);
+		hole[0].before(moles);
+		moles.style.left = x[getRandom(2)] + "px";
+		moles.style.top = y[getRandom(2)] + "px";
+		let randomImg = getRandom(3);
+		moles.style.backgroundImage = "url(" + images[randomImg] + ")";
+		moles.style.backgroundSize = "100% 100%";
+		let top = 0;
+		
+
+
+		function up(){
+			top = top - 160;
+			moles.style.marginTop = top + "px";
+		}
+		setTimeout(up, 500);
+
+		function down(){
+			top = top + 160;
+			moles.style.marginTop = top + "px";
+
+			if (top == 0) {
+				setInterval(clear, 550);
+			}
+		}
+
+		function clear(){
+			moles.style.display = "none";
+		}
+
+		setTimeout(down, 1000);
+
+		if (randomImg == 0) {
+			moles.type = "norm";
+		}else if (randomImg == 1) {
+			moles.type = "good";
+		}else if (randomImg == 2) {
+			moles.type = "bad";
+		}else if (randomImg == 3) {
+			moles.type = "best";
+		}
+
+		moles.onclick = function(){
+			if (moles.type == "norm") {
+				score = score + 10;
+			}else if (moles.type == "good") {
+				score = score + 20;
+			}else if (moles.type == "bad") {
+				score = score - 10;
+			}else if (moles.type == "best") {
+				score = score + 30;
+			}
+
+			document.querySelector(".glasses").innerHTML = score;
+
+			moles.style.display = "none";
+
+			if (score >= 200) {
+				alert();
+			}
+			
+		}
+
+
+    }
+
+   
+
+
+</script>
+</body>
+</html>
